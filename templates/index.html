@@ -27,13 +27,14 @@
         <div class = "label">
         </div>
         <div class = "label">
-        {% if post.player_stack > 999 and post.player_stack <= 9999 %}
-            <h2 style="font-size: 35px">Player's Stack: ${{stack[0]}},{{stack[1:]}}</h2>
-            {% elif post.player_stack > 9999 %}
-            <h2 style="font-size: 35px">Player's Stack: ${{stack[0]}}{{stack[1]}},{{stack[2:]}}</h2>
-            {% else %}
-            <h2>Player's Stack: ${{post.player_stack}}</h2>
-        {% endif %}
+<!--        {% if post.player_stack > 999 and post.player_stack <= 9999 %}-->
+<!--            <h2 style="font-size: 35px">Player's Stack: ${{stack[0]}},{{stack[1:]}}</h2>-->
+<!--            {% elif post.player_stack > 9999 %}-->
+            <h2>The pot is $20</h2>
+            <!--            <h2 style="font-size: 35px">Player's Stack: ${{stack[0]}}{{stack[1]}},{{stack[2:]}}</h2>-->
+<!--            {% else %}-->
+<!--            <h2>Player's Stack: ${{post.player_stack}}</h2>-->
+<!--        {% endif %}-->
         </div>
         <div class="label">
         </div>
@@ -55,8 +56,9 @@
             <img src="{{post.img2}}" width="120" height="160">
         </div>
         <div class="label">
-            <h2>Bet $20</h2></h3>
+<!--            <h2>Bet $20</h2></h3>-->
             <h2>Proceed to flop</h2>
+            <br>
             <a href="{{url_for('the_flop')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
 <!--            <button class="button">Fold</button>-->
         </div>
