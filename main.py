@@ -336,6 +336,7 @@ def compare_flush_cards(player1, player2, flush):
         winner = 'Dealer'
     else:
         winner = "It's a draw!"
+    return winner
 
 def check_if_straight(hand_value, board_value):
     is_straight = False
@@ -606,7 +607,7 @@ def check_if_2pairs(hand_value, board_value):
                     if hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1]:
                         is_2pairs = True
                 else:
-                    if len(board2pairs) <= 1:
+                    if len(board2pairs) == 1:
                             is_2pairs = True
             elif board_value.count(hand_value[1]) == 1:
                 if len(board2pairs) == 2:
