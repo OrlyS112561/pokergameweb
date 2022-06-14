@@ -1096,7 +1096,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://posts.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://posts.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://hiooxnvmdbnsoo:1eaeaff749244aaf6d704ff820de862fdc1a864069022456589bae' \
                                         '78ddb4565f@ec2-54-157-16-196.compute-1.amazonaws.com:5432/d4i1r2vq0nv1n4'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
