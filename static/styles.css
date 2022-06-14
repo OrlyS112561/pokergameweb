@@ -1,0 +1,141 @@
+h1 {
+    font-family: 'Roboto Condensed' , sans-serif;
+    font-size: 60px;
+    color: #1F4690;
+}
+
+h2 {
+    color: #990000;
+    margin: 10px;
+}
+
+.body_class {
+    background-color: #A1E3D8;
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+
+.text_box {
+    color: #B20600;
+    font-family: 'Roboto Condensed' , sans-serif;
+    width: 60%;
+    text-align: center;
+}
+
+.title_div {
+
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 32px;
+    text-align: center;
+}
+
+.stack {
+    color:  #990000;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+}
+
+.row {
+  display: flex;
+}
+
+.column_2 {
+  padding: 5px 10px;
+}
+
+
+.column_5 {
+    padding: 0 50px;
+    display: block;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.label {
+    font-family: 'Roboto Condensed' , sans-serif;
+    column-width: 300px;
+    width: 50%;
+    text-align: center;
+    min-height: 1px;
+
+}
+
+.label2 {
+    font-family: 'Ubuntu', sans-serif;
+    column-width: 300px;
+    width: 100%;
+    text-align: justify;
+    min-height: 1px;
+    padding: 10px;
+}
+.board {
+    background-color: #005555;
+    padding: 10px 80px;
+}
+
+.button {
+  background-color: #008cba; /* Grey */
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button:hover {background-color: #4B5D67}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.blink {
+ -webkit-animation: blink .75s linear infinite;
+ -moz-animation: blink .75s linear infinite;
+ -ms-animation: blink .75s linear infinite;
+ -o-animation: blink .75s linear infinite;
+ animation: blink .75s linear infinite;
+}
+@-webkit-keyframes blink {
+ 0% { opacity: 1; }
+ 50% { opacity: 1; }
+ 50.01% { opacity: 0; }
+ 100% { opacity: 0; }
+}
+@-moz-keyframes blink {
+ 0% { opacity: 1; }
+ 50% { opacity: 1; }
+ 50.01% { opacity: 0; }
+ 100% { opacity: 0; }
+}
+@-ms-keyframes blink {
+ 0% { opacity: 1; }
+ 50% { opacity: 1; }
+ 50.01% { opacity: 0; }
+ 100% { opacity: 0; }
+}
+@-o-keyframes blink {
+ 0% { opacity: 1; }
+ 50% { opacity: 1; }
+ 50.01% { opacity: 0; }
+ 100% { opacity: 0; }
+}
+@keyframes blink {
+ 0% { opacity: 1; }
+ 50% { opacity: 1; }
+ 50.01% { opacity: 0; }
+ 100% { opacity: 0; }
+}
