@@ -352,7 +352,6 @@ def check_if_straight(hand_value, board_value):
                 pass
             elif b in list:
                 straight_hand.append(b)
-        # print(straight_hand)
         if len(straight_hand) >= 5:
             is_straight = True
             return is_straight
@@ -373,7 +372,6 @@ def get_player_straight(hand_value, board_value):
             elif b in list:
                 straight_hand.append(b)
         if len(straight_hand) >= 5:
-            #print(straight_hand)
             break
     return straight_hand
 
@@ -439,7 +437,6 @@ def check_if_fullhouse(hand_value, board_value):
     is_fullhouse = False
     if hand_value[0] == hand_value[1]: # pair
         if board_value.count(hand_value[0]) == 1:
-            print('no')
             for i in range(1,14):
                 if board_value.count(i) >= 2:
                     is_fullhouse = True
@@ -458,7 +455,6 @@ def check_if_fullhouse(hand_value, board_value):
                     if i == fullhouse_card:
                         pass
                     elif board_value.count(i) == 2:
-                        print(card, i)
                         is_fullhouse = True
                         return is_fullhouse
                     else:
@@ -811,7 +807,6 @@ def poker_game():
     player1_hand_value = []
     player2_hand_value = []
     board_value = []
-    print(player1_hand, player2_hand, board)
     for card in player1_hand:
         card_value = get_card_value(card)
         player1_hand_value.append(card_value)
@@ -1130,7 +1125,6 @@ def start_game():
     global counter
     global wins
     counter += 1
-    print(player_stack, type(player_stack))
     try:
         poker_delete = PokerDeck.query.get(1)
         player_stack = poker_delete.player_stack
@@ -1140,7 +1134,6 @@ def start_game():
         pass
     poker = []
     poker = poker_game()
-    print(poker)
     img1 = '/static/images/' + poker[0] + '.png'
     img2 = '/static/images/' + poker[1] + '.png'
     img3 = '/static/images/' + poker[2] + '.png'
@@ -1158,8 +1151,6 @@ def start_game():
         player_stack = 5000
         switch = False
     player_stack -= 20
-    print(img1,img2,img3,img4)
-    print(img5,img6,img7,img8,img9)
     new_post = PokerDeck(
         img1 = img1,
         img2 = img2,
@@ -1236,7 +1227,6 @@ def exit_final():
     post_flop.player_stack = 0
     db.session.commit()
     wins, counter = 0,0
-    print('exit final', player_stack)
     return render_template('exit.html')
 
 @app.route('/')
