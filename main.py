@@ -1233,7 +1233,7 @@ def exit_final():
 
 @app.route('/')
 def about():
-    return render_template('about.html')
+    return render_template('pokerplay.html')
 
 
 if __name__ == "__main__":
