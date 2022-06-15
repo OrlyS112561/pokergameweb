@@ -138,6 +138,54 @@ h3 {
 }
 
 
+@media only screen and (min-width: 1000px) {
+
+h1 {
+    font-size: 50px;
+    margin: 20px;
+}
+
+h2 {
+    font-size: 30px;
+    margin: 10px;
+}
+
+h3 {
+    font-size: 15px;
+}
+
+.img_hand {
+    width: 120px;
+    height: 170px;
+    margin: 0px 5px;
+
+}
+
+.img_board {
+    width: 150px;
+    height: 200px;
+}
+
+.board {
+    padding: 10px 0px;
+}
+
+.column_5 {
+    padding: 5px 28px;
+    display: block;
+}
+
+.label2 {
+    column-width: 1000px;
+    width: 100%;
+    text-align: justify;
+    padding: 0px;
+}
+
+}
+
+
+
 @media only screen and (min-width: 1400px) {
 
 h1 {
@@ -181,6 +229,10 @@ h3 {
     width: 100%;
     text-align: justify;
     padding: 0px;
+}
+
+.button {
+    font-size: 20px;
 }
 
 }
