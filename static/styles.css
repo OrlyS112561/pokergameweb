@@ -35,15 +35,15 @@ h3 {
 }
 
 .img_hand {
-    width: 90px;
-    height: 110px;
+    width: 80px;
+    height: 100px;
     margin: 0px 5px;
 
 }
 
 .img_board {
-    width: 120px;
-    height: 160px;
+    width: 100px;
+    height: 140px;
 
 }
 
@@ -74,7 +74,7 @@ h3 {
 
 .board {
     background-color: #005555;
-    padding: 10px 40px;
+    padding: 10px 80px;
 }
 
 .button {
