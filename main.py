@@ -820,10 +820,6 @@ def poker_game():
         cards_in_play.append(flop)
         board.append(flop)
         poker_event.append(flop)
-        # THE TURN
-    # board = ['9H', '9S', '8C', '8H', 'JH']
-    # for card in board:
-    #     poker_event.append(card)
     player1_hand_value = []
     player2_hand_value = []
     board_value = []
