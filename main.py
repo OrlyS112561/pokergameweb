@@ -618,27 +618,38 @@ def check_if_2pairs(hand_value, board_value):
                             is_2pairs = True
     return is_2pairs
 
-def get_player_2pairs(hand_value, board_value):
-    player_2pairs = []
-    if hand_value[0] == hand_value[1]:
-        player_2pairs.append(hand_value[0])
-        for num in range(1,15):
-            if num == hand_value[0]:
-                pass
-            if board_value.count(num) == 2:
-                player_2pairs.append(num)
+def check_if_2pairs(hand_value, board_value):
+    is_2pairs = False
+    board2pairs = []
+    for i in range(0,14):
+        if board_value.count(i) == 2:
+            board2pairs.append(i)
+    if hand_value[0] == hand_value[1]: # pair
+        if len(board2pairs) == 1:
+            is_2pairs = True
+        if len(board2pairs) == 2:
+            if hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1]:
+                is_2pairs = True
     else:
-        for card in hand_value:
-            if board_value.count(card) == 1:
-                player_2pairs.append(card)
-        if len(player_2pairs) < 2:
-            for num in range(0,14):
-                if player_2pairs.count(num) == 1:
-                    pass
+        if board_value.count(hand_value[0]) == 1 and board_value.count(hand_value[1]) == 1:
+            if len(board2pairs) == 1:
+                    is_2pairs = True
+        else:
+            if board_value.count(hand_value[0]) == 1:
+                if len(board2pairs) == 2:
+                    if hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1]:
+                        is_2pairs = True
                 else:
-                    if board_value.count(num) == 2:
-                        player_2pairs.append(num)
-    return player_2pairs
+                    if len(board2pairs) == 1:
+                            is_2pairs = True
+            elif board_value.count(hand_value[1]) == 1:
+                if len(board2pairs) == 2:
+                    if hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1]:
+                        is_2pairs = True
+                else:
+                    if len(board2pairs) == 1:
+                            is_2pairs = True
+    return is_2pairs
 
 # check if pair
 def check_if_pair(hand_value, board_value):
