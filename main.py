@@ -1045,6 +1045,8 @@ def poker_game():
             winner = 'Player'
         elif min(player1_2pairs) < min(player2_2pairs):
             winner = 'Dealer'
+        elif max(player1_2pairs) == max(player2_2pairs) and min(player1_2pairs) == min(player2_2pairs):
+            winner = "It's a draw!"
         else:
             if board_value.count(player1_hand_value[0]) == 0:
                 kicker1 = player1_hand_value[0]
