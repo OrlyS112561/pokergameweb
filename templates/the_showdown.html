@@ -47,13 +47,8 @@
             <h2>{{post.player1_hand}}</h2>
         </div>
         <div class = "label">
-            {% if post.winner == 'Player' %}
-            <h2>Pot won is $400</h2>
-            {% elif post.winner == 'Dealer' %}
-            <h2>Pot lost is $400</h2>
-            {% else %}
-            <h2></h2>
-            {% endif %}
+            <h2>{{post.player2_hand}}</h2>
+
 <!--        {% if post.player_stack > 999 and post.player_stack <= 9999 %}-->
 <!--            <h2 style="font-size: 35px">Player's Stack: ${{stack[0]}},{{stack[1:]}}</h2>-->
 <!--        {% elif post.player_stack > 9999 %}-->
@@ -63,13 +58,17 @@
 <!--        {% endif %}-->
         </div>
         <div class="label">
-            <h2>{{post.player2_hand}}</h2>
-        </div>
+            {% if post.winner == 'Player' %}
+            <h2>Pot won is $400</h2>
+            {% elif post.winner == 'Dealer' %}
+            <h2>Pot lost is $400</h2>
+            {% else %}
+            <h2></h2>
+            {% endif %}        </div>
     </div>
 
     <div class="row">
         <div class="label">
-            <h2>Player's Cards</h2>
         </div>
         <div class="label">
 <!--            {% if counter == 1 %}-->
@@ -79,7 +78,6 @@
 <!--            {% endif %}-->
         </div>
         <div class="label">
-            <h2>Dealer's Cards</h2>
         </div>
     </div>
 
@@ -89,14 +87,13 @@
             <img class="img_hand" src="{{post.img2}}">
         </div>
         <div class="label">
-
+            <img class="img_hand" src='{{post.img3}}'>
+            <img class="img_hand" src='{{post.img4}}'>
+        </div>
+        <div class="label">
             <h2>Another game? </h2>
             <br>
             <a href="{{url_for('start_game')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
-        </div>
-        <div class="label">
-            <img class="img_hand" src='{{post.img3}}'>
-            <img class="img_hand" src='{{post.img4}}'>
         </div>
     </div>
     <div class="row board">
