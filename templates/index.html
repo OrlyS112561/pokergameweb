@@ -16,14 +16,41 @@
         <div class="label">
             <h3>Contact: pokerplayerat69@gmail.com</h3>
         </div>
-
-    <div class="label">
-        <h1>New Game</h1>
-    </div>
+    {% if post.street == 1 %}
+        <div class="label">
+         <h1>New Game</h1>
+        </div>
+    {% elif post.street == 2 %}
+        <div class="label">
+            <h1>The Flop</h1>
+        </div>
+    {% elif post.street == 3 %}
+        <div class="label">
+            <h1>The Turn</h1>
+        </div>
+    {% elif post.street == 4 %}
+        <div class="label">
+            <h1>The River</h1>
+        </div>
+    {% elif post.street == 5 %}
+        <div class="label blink">
+        {% if post.winner != "It's a draw!" %}
+            {% if post.winner == 'Dealer' %}
+            <h1 style="color: #990000">{{post.winner}} wins! </h1>
+            {% else %}
+            <h1>{{post.winner}} wins!</h1>
+            {% endif %}
+        {% else %}
+            <h1>{{post.winner}}</h1>
+        {% endif %}
+        </div>
+    {% endif %}
         <div class="label">
             <h2>Stack: ${{stack[0]}},{{stack[1:]}}</h2>
-        </div>    </div>
+        </div>
+    </div>
     <div class="row">
+        {% if post.street <= 4 %}
         <div class="label">
            <h2>Dealer's Cards</h2>
         </div>
@@ -32,8 +59,33 @@
             <h2>Player's Cards</h2>
         </div>
         <div class="label">
+            {% if post.street == 1 %}
            <h2>The bet is $20</h2>
+            {% elif post.street == 2 %}
+            <h2>The pot is $40</h2>
+            {% elif post.street == 3 %}
+            <h2>The pot is $100</h2>
+            {% elif post.street == 4 %}
+            <h2>The pot is $200</h2>
+            {% endif %}
         </div>
+        {% else %}
+        <div class = "label">
+            <h2>{{post.player2_hand}}</h2>
+        </div>
+        <div class = "label">
+            <h2>{{post.player1_hand}}</h2>
+        </div>
+        <div class="label">
+            {% if post.winner == 'Player' %}
+            <h2>Pot won is $400</h2>
+            {% elif post.winner == 'Dealer' %}
+            <h2>Pot lost is $400</h2>
+            {% else %}
+            <h2></h2>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
     <div class="row">
         <div class="label">
@@ -44,8 +96,8 @@
         <div class="label">
         </div>
     </div>
-
     <div class="row">
+        {% if post.street < 5 %}
         <div class="label">
             <img class="img_hand"  src='/static/images/back_card.png'>
             <img class="img_hand" src='/static/images/back_card.png'>
@@ -53,15 +105,45 @@
         <div class="label">
             <img class="img_hand" src="{{post.img1}}">
             <img class="img_hand" src="{{post.img2}}">
-
+        </div>
+        {% else %}
+        <div class="label">
+            <img class="img_hand" src='{{post.img3}}'>
+            <img class="img_hand" src='{{post.img4}}'>
         </div>
         <div class="label">
+            <img class="img_hand" src="{{post.img1}}">
+            <img class="img_hand" src="{{post.img2}}">
+        </div>
+        {% endif %}
+        <div class="label">
+            {% if post.street == 1 %}
             <h2>Proceed to flop</h2>
             <br>
             <a href="{{url_for('the_flop')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+            {% elif post.street == 2 %}
+            <h2>Bet $30 to proceed to turn</h2>
+            <br>
+            <a href="{{url_for('the_turn')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+            {% elif post.street == 3 %}
+            <h2>Bet $50 to proceed to river</h2>
+            <br>
+            <a href="{{url_for('the_river')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+            {% elif post.street == 4 %}
+            <h2>Bet $100 to showdown</h2>
+            <br>
+            <a href="{{url_for('the_showdown')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+            {% else %}
+            <h2>Another game? </h2>
+            <br>
+            <a href="{{url_for('start_game')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+
+            {% endif %}
+
         </div>
     </div>
     <div class="row board">
+        {% if post.street == 1 %}
         <div class="column_5">
             <img class="img_board" src="/static/images/back_card.png">
         </div>
@@ -77,7 +159,55 @@
         <div class="column_5">
             <img class="img_board" src="/static/images/back_card.png">
         </div>
+        {% elif post.street == 2 %}
+        <div class="column_5">
+            <img class="img_board" src="{{post.img5}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="{{post.img6}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="{{post.img7}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="/static/images/back_card.png">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="/static/images/back_card.png">
+        </div>
+        {% elif post.street == 3 %}
+        <div class="column_5">
+            <img class="img_board" src="{{post.img5}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="{{post.img6}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="{{post.img7}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="{{post.img8}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="/static/images/back_card.png">
+        </div>
+        {% else %}
+        <div class="column_5">
+            <img class="img_board" src="{{post.img5}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="{{post.img6}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="{{post.img7}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="{{post.img8}}">
+        </div>
+        <div class="column_5">
+            <img class="img_board" src="{{post.img9}}">
+        </div>
+        {% endif %}
     </div>
-
 </body>
 </html>

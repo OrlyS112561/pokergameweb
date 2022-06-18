@@ -1169,7 +1169,6 @@ class PokerDeck(db.Model):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        print(f"email {request.form['email']}")
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
@@ -1293,7 +1292,7 @@ def the_flop():
     user_id = current_user.get_id()
     post_flop = PokerDeck.query.filter_by(user=user_id).first()
     stack = str(post_flop.player_stack)
-    return render_template('the_flop.html', post=post_flop, stack=stack)
+    return render_template('index.html', post=post_flop, stack=stack)
 
 @app.route('/the_turn')
 @login_required
@@ -1310,7 +1309,7 @@ def the_turn():
     stack = str(post_flop.player_stack)
     user.player_stack = post_flop.player_stack
     db.session.commit()
-    return render_template('the_turn.html', post=post_flop, stack=stack)
+    return render_template('index.html', post=post_flop, stack=stack)
 
 @app.route('/the_river')
 @login_required
@@ -1327,7 +1326,7 @@ def the_river():
     user.player_stack = post_flop.player_stack
     db.session.commit()
     stack = str(post_flop.player_stack)
-    return render_template('the_river.html', post=post_flop, stack=stack)
+    return render_template('index.html', post=post_flop, stack=stack)
 
 @app.route('/the_showdown')
 @login_required
@@ -1347,7 +1346,7 @@ def the_showdown():
     user.player_stack = post_flop.player_stack
     db.session.commit()
     stack = str(post_flop.player_stack)
-    return render_template('the_showdown.html', post=post_flop, stack=stack)
+    return render_template('index.html', post=post_flop, stack=stack)
 
 @app.route('/exit_game')
 @login_required
