@@ -1293,6 +1293,7 @@ def the_flop():
     post_flop = PokerDeck.query.filter_by(user=user_id).first()
     post_flop.street = 2
     stack = str(post_flop.player_stack)
+    db.session.commit()
     return render_template('index.html', post=post_flop, stack=stack)
 
 @app.route('/the_turn')
