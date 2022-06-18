@@ -1200,7 +1200,8 @@ def register():
         email = request.form["email"],
         password = hash_password,
         date_registered = date_registered,
-        date_last_loggedin = date_registered
+        date_last_loggedin = date_registered,
+        player_stack = 5000
         )
         db.session.add(new_user)
         db.session.commit()
@@ -1214,18 +1215,16 @@ def logout():
     return redirect(url_for('about'))
 
 
+
 @app.route('/start_game')
 @login_required
 def start_game():
 # for i in range(2):
     user_id = current_user.get_id()
-    global player_stack
-    global switch
-    global counter
-    global wins
-    counter += 1
+    user = User.query.get(user_id)
     poker = []
     poker = poker_game()
+    street = 1
     img1 = '/static/images/' + poker[0] + '.png'
     img2 = '/static/images/' + poker[1] + '.png'
     img3 = '/static/images/' + poker[2] + '.png'
@@ -1238,9 +1237,12 @@ def start_game():
     player1 = poker[9]
     player2 = poker[10]
     winner = poker[11]
-    player_stack = 0
-    try:
-        poker_update = PokerDeck.query.filter_by(user=user_id).first()
+    print (player1, player2, winner)
+    poker_update = PokerDeck.query.filter_by(user=user_id).first()
+    if poker_update:
+        print(poker_update)
+        poker_update.player_stack -= 20
+        poker_update.street = street
         poker_update.img1 = img1
         poker_update.img2 = img2
         poker_update.img3 = img3
@@ -1254,10 +1256,11 @@ def start_game():
         poker_update.player2_hand = player2
         poker_update.winner = winner
         db.session.commit()
-    except:
-        user = current_user.get_id()
+    else:
+        player_stack = user.player_stack - 20
         new_post = PokerDeck(
-        user = user,
+        user = user_id,
+        street = street,
         img1 = img1,
         img2 = img2,
         img3 = img3,
@@ -1270,13 +1273,17 @@ def start_game():
         player1_hand = player1,
         player2_hand = player2,
         winner = winner,
-        player_stack = player_stack
+        player_stack = player_stack,
+
         )
         db.session.add(new_post)
         db.session.commit()
+    print(player1, player2, winner)
     post = PokerDeck.query.filter_by(user=user_id).first()
-    player_stack = ''
-    return render_template("index.html", post=post, stack=player_stack)
+    user.player_stack = post.player_stack
+    db.session.commit()
+    stack = str(post.player_stack)
+    return render_template("index.html", post=post, stack=stack)
 
 @app.route('/the_flop')
 @login_required
@@ -1284,63 +1291,67 @@ def the_flop():
     global player_stack
     user_id = current_user.get_id()
     post_flop = PokerDeck.query.filter_by(user=user_id).first()
-    return render_template('the_flop.html', stack=player_stack, post=post_flop)
+    stack = str(post_flop.player_stack)
+    return render_template('the_flop.html', post=post_flop, stack=stack)
 
 @app.route('/the_turn')
 @login_required
 def the_turn():
     global player_stack
     user_id = current_user.get_id()
+    user = User.query.get(user_id)
     post_flop = PokerDeck.query.filter_by(user=user_id).first()
-    # player_stack = str(post_flop.player_stack)
-    return render_template('the_turn.html', post=post_flop, stack=player_stack)
+    if post_flop.street != 2:
+        return redirect((url_for('start_game')))
+    post_flop.player_stack = post_flop.player_stack - 30
+    post_flop.street = 3
+    db.session.commit()
+    stack = str(post_flop.player_stack)
+    user.player_stack = post_flop.player_stack
+    db.session.commit()
+    return render_template('the_turn.html', post=post_flop, stack=stack)
 
 @app.route('/the_river')
 @login_required
 def the_river():
     global player_stack
     user_id = current_user.get_id()
+    user = User.query.get(user_id)
     post_flop = PokerDeck.query.filter_by(user=user_id).first()
-    # player_stack = post_flop.player_stack - 50
-    # post_flop.player_stack = player_stack
-    # db.session.commit()
-    # player_stack = str(post_flop.player_stack)
-    return render_template('the_river.html', post=post_flop, stack=player_stack)
+    if post_flop.street != 3:
+        return redirect((url_for('start_game')))
+    post_flop.player_stack = post_flop.player_stack - 50
+    post_flop.street = 4
+    db.session.commit()
+    user.player_stack = post_flop.player_stack
+    db.session.commit()
+    stack = str(post_flop.player_stack)
+    return render_template('the_river.html', post=post_flop, stack=stack)
 
 @app.route('/the_showdown')
 @login_required
 def the_showdown():
-    global wins
-    global counter
     user_id = current_user.get_id()
+    user = User.query.get(user_id)
     post_flop = PokerDeck.query.filter_by(user=user_id).first()
-    # player_stack = post_flop.player_stack - 100
-    # if post_flop.winner == "Player":
-    #     player_stack += 400
-    # elif post_flop.winner == "It's a draw!":
-    #     player_stack += 200
-    # post_flop.player_stack = player_stack
-    # db.session.commit()
-    # player_stack = str(post_flop.player_stack)
-    if post_flop.winner == 'Player':
-        wins += 1
-    return render_template('the_showdown.html', post=post_flop, stack=player_stack, wins=wins, counter=counter)
+    if post_flop.street != 4:
+        return redirect((url_for('start_game')))
+    if post_flop.winner == "Player":
+        post_flop.player_stack += 300
+    elif post_flop.winner == 'Dealer':
+        post_flop.player_stack -= 100
+    else:
+        post_flop.player_stack += 100
+    db.session.commit()
+    user.player_stack = post_flop.player_stack
+    db.session.commit()
+    stack = str(post_flop.player_stack)
+    return render_template('the_showdown.html', post=post_flop, stack=stack)
 
 @app.route('/exit_game')
 @login_required
 def exit_game():
     return render_template('exit_game.html')
-
-@app.route('/exit_final')
-def exit_final():
-    global wins, counter
-
-    # post_flop = PokerDeck.query.get(1)
-    # post_flop.player_stack = 0
-    # db.session.commit()
-    wins, counter = 0,0
-    return
-    return render_template('exit.html')
 
 @app.route('/')
 def about():
