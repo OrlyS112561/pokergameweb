@@ -1224,7 +1224,7 @@ def start_game():
     user = User.query.get(user_id)
     poker = []
     poker = poker_game()
-    street = 1
+    street = 2
     img1 = '/static/images/' + poker[0] + '.png'
     img2 = '/static/images/' + poker[1] + '.png'
     img3 = '/static/images/' + poker[2] + '.png'
