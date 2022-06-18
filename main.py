@@ -1336,6 +1336,7 @@ def the_showdown():
     post_flop = PokerDeck.query.filter_by(user=user_id).first()
     if post_flop.street != 4:
         return redirect((url_for('start_game')))
+    post_flop.street = 5
     if post_flop.winner == "Player":
         post_flop.player_stack += 300
     elif post_flop.winner == 'Dealer':
