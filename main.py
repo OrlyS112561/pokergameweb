@@ -1240,7 +1240,8 @@ def start_game():
     print (player1, player2, winner)
     poker_update = PokerDeck.query.filter_by(user=user_id).first()
     if poker_update:
-        print(poker_update)
+        if poker_update.player_stack < 400:
+            poker_update.player_stack = 5000
         poker_update.player_stack -= 20
         poker_update.street = street
         poker_update.img1 = img1
