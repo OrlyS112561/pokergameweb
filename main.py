@@ -1189,7 +1189,6 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        print(f"name is {request.form['name']}")
         if User.query.filter_by(email=request.form['email']).first():
             flash("You already signed up with that email.  Login instead.")
             return redirect(url_for('login'))
@@ -1220,7 +1219,6 @@ def logout():
 def start_game():
 # for i in range(2):
     user_id = current_user.get_id()
-    print(current_user, f'hello {user_id}')
     global player_stack
     global switch
     global counter
@@ -1241,7 +1239,6 @@ def start_game():
     player2 = poker[10]
     winner = poker[11]
     player_stack = 0
-    print (player1, player2, winner)
     try:
         poker_update = PokerDeck.query.filter_by(user=user_id).first()
         poker_update.img1 = img1
@@ -1277,7 +1274,6 @@ def start_game():
         )
         db.session.add(new_post)
         db.session.commit()
-    print(player1, player2, winner)
     post = PokerDeck.query.filter_by(user=user_id).first()
     player_stack = ''
     return render_template("index.html", post=post, stack=player_stack)
