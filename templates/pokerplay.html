@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>About</title>
+    <title>PokerPlay</title>
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,9 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,300&display=swap" rel="stylesheet">
 </head>
 <body class="body_class">
+<div class="row">
+    <div class="label">
+            <h3 class="contact">Contact: pokerplayerat69@gmail.com</h3>
+    </div>
+</div>
     <div class="row">
         <div class="label">
-            <h3 class="contact">Contact: pokerplayerat69@gmail.com</h3>
         </div>
         <div class="label">
             <h1>Play Poker</h1>
@@ -25,22 +29,14 @@
     </div>
     <div class="row">
         <div class="label">
-
         </div>
         <div class="label2">
             <h3>
-                Poker has been a popular card game due to celebrity poker tournament champions and the annual
-                World Series of Poker Tournaments that promise millions of $$$ in prizes.  As a beginner or new
-                player, it is sometimes intimidating to play in live and online games, due to the risk of losing
-                money and, sometimes, getting harassed by other players.  Aside from playing with friends, poker
-                game web apps provide a safe way of practicing your poker skills.
-            </h3>
-            <h3>
-                This website was designed for people who are new to playing poker and would like to practice
-                their skills without the risk of losing money or intimidated by a live or online game. New
-                players need to learn and familiarize themselves with the different poker hands as well as
-                knowing when to proceed to the next street (flop, turn, river) or when to fold their hands
-                to minimize loss, while having fun.
+                This website was designed for people who are just starting to play poker and would like to practice their
+                skills in playing without the risk of losing money.
+                New players need to learn and familiarize themselves with the different poker hands as well as
+                knowing when to proceed to the next street (flop, turn, river) or when to fold their hands to minimize
+                loss, while having fun.
             </h3>
             <h3>The game is between you, the player, and your computer or phone, the dealer.
                 The pre-flop bet is $20.  On the flop, the player has to decide to
@@ -53,16 +49,21 @@
             </h3>
         </div>
         <div class="label">
-
         </div>
     </div>
     <br>
     <div class="row">
         <div class="label">
+
         </div>
         <div class="label">
-            <br>
-            <a href="{{url_for('start_game')}}"><button class="button">Play Poker Now</button></a>
+        {% if not logged_in: %}
+            <a href="{{url_for('login')}}"> <button class="button button1">Login</button></a>
+            <h3>or</h3>
+            <a href="{{url_for('register')}}"><button class="button button1">Register</button></a>
+        {% else %}
+            <a href="{{url_for('start_game')}}"> <button class="button">Play Poker</button></a>
+        {% endif %}
         </div>
         <div class="label">
         </div>

@@ -1,6 +1,9 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 import random as rd
+import datetime
 
 counter = 0
 wins = 0
@@ -1110,17 +1113,39 @@ def poker_game():
     poker_event.append(winner)
     return poker_event
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+################################FLASK AND TABLES###################################
 
+app = Flask(__name__)
+
+app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://xeyuegcchuluqy:8a506e0f72e06ad06f0254c537073a8caf65e50b5e730bce8f200782ae6b65d5@ec2-23-23-182-238.compute-1.amazonaws.com:5432/dvfe08qovhmup'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://bhrvoqmutroiau:8094732136390fac098d971c35ae2fa9777df7f62501ed03f16376ad9a382974@ec2-52-206-182-219.compute-1.amazonaws.com:5432/d69fm92tscn1hh'
+app.config['SQLALCHEMY_BINDS'] = {'posts':'postgresql://gbmstexhdzhmfd:ed6322f032fc9490f7c1f85976d1285b96a55296d9a29ce0b0c21538c2c16026@ec2-52-204-195-41.compute-1.amazonaws.com:5432/db9nk8on952drg'}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-class PokerDeck(db.Model):
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+##CREATE USERS TABLE IN DB
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(1000))
+    date_registered = db.Column(db.String(250))
+    date_last_loggedin = db.Column(db.String(250))
+    player_stack = db.Column(db.Integer)
+# db.create_all()
+
+class PokerDeck(db.Model):
+    __bind_key__ = "posts"
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(250), unique=True, nullable=False)
     img1 = db.Column(db.String(250), unique=True, nullable=False)
     img2 = db.Column(db.String(250), unique=True, nullable=False)
     img3 = db.Column(db.String(250), unique=True, nullable=False)
@@ -1134,23 +1159,71 @@ class PokerDeck(db.Model):
     player2_hand = db.Column(db.String(250), nullable=False)
     winner = db.Column(db.String(250), nullable=False)
     player_stack = db.Column(db.Integer, nullable=False)
+# db.create_all(bind=['posts'])
 
+#Line below only required once, when creating DB.
 # db.create_all()
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        print(f"email {request.form['email']}")
+        email = request.form['email']
+        password = request.form['password']
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            flash("Email does not exist. Please try again.")
+            return redirect(url_for('login'))
+        elif not check_password_hash(user.password, password):
+            flash("Incorrect password.  Please try again.")
+            return redirect(url_for('login'))
+        else:
+            login_user(user)
+            user.date_last_loggedin = datetime.datetime.now().strftime("%x")
+            db.session.commit()
+            return redirect(url_for('about'))
+    return render_template("login.html", logged_in=current_user.is_authenticated)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        print(f"name is {request.form['name']}")
+        if User.query.filter_by(email=request.form['email']).first():
+            flash("You already signed up with that email.  Login instead.")
+            return redirect(url_for('login'))
+        hash_password=generate_password_hash(request.form['password'],method='pbkdf2:sha256', salt_length=8)
+        date = datetime.datetime.now()
+        date_registered = date.strftime("%x")
+        new_user = User(
+        name = request.form["name"],
+        email = request.form["email"],
+        password = hash_password,
+        date_registered = date_registered,
+        date_last_loggedin = date_registered
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        login_user(new_user)
+        return redirect(url_for("about"))
+    return render_template("register.html", logged_in=current_user.is_authenticated)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('about'))
+
+
 @app.route('/start_game')
+@login_required
 def start_game():
+# for i in range(2):
+    user_id = current_user.get_id()
+    print(current_user, f'hello {user_id}')
     global player_stack
     global switch
     global counter
     global wins
     counter += 1
-    try:
-        poker_delete = PokerDeck.query.get(1)
-        player_stack = poker_delete.player_stack
-        db.session.delete(poker_delete)
-        db.session.commit()
-    except:
-        pass
     poker = []
     poker = poker_game()
     img1 = '/static/images/' + poker[0] + '.png'
@@ -1165,12 +1238,27 @@ def start_game():
     player1 = poker[9]
     player2 = poker[10]
     winner = poker[11]
-    player_stack = int(player_stack)
-    if player_stack < 400 or switch:
-        player_stack = 5000
-        switch = False
-    player_stack -= 20
-    new_post = PokerDeck(
+    player_stack = 0
+    print (player1, player2, winner)
+    try:
+        poker_update = PokerDeck.query.filter_by(user=user_id).first()
+        poker_update.img1 = img1
+        poker_update.img2 = img2
+        poker_update.img3 = img3
+        poker_update.img4 = img4
+        poker_update.img5 = img5
+        poker_update.img6 = img6
+        poker_update.img7 = img7
+        poker_update.img8 = img8
+        poker_update.img9 = img9
+        poker_update.player1_hand = player1
+        poker_update.player2_hand = player2
+        poker_update.winner = winner
+        db.session.commit()
+    except:
+        user = current_user.get_id()
+        new_post = PokerDeck(
+        user = user,
         img1 = img1,
         img2 = img2,
         img3 = img3,
@@ -1184,74 +1272,81 @@ def start_game():
         player2_hand = player2,
         winner = winner,
         player_stack = player_stack
-    )
-    db.session.add(new_post)
-    db.session.commit()
-    post = PokerDeck.query.get(1)
-    player_stack = str(post.player_stack)
+        )
+        db.session.add(new_post)
+        db.session.commit()
+    print(player1, player2, winner)
+    post = PokerDeck.query.filter_by(user=user_id).first()
+    player_stack = ''
     return render_template("index.html", post=post, stack=player_stack)
 
 @app.route('/the_flop')
+@login_required
 def the_flop():
-    post_flop = PokerDeck.query.get(1)
-    player_stack = str(post_flop.player_stack)
-    return render_template('the_flop.html', post=post_flop, stack=player_stack)
-
+    global player_stack
+    user_id = current_user.get_id()
+    post_flop = PokerDeck.query.filter_by(user=user_id).first()
+    return render_template('the_flop.html', stack=player_stack, post=post_flop)
 
 @app.route('/the_turn')
+@login_required
 def the_turn():
     global player_stack
-    post_flop = PokerDeck.query.get(1)
-    player_stack = post_flop.player_stack - 30
-    post_flop.player_stack = player_stack
-    db.session.commit()
-    player_stack = str(post_flop.player_stack)
+    user_id = current_user.get_id()
+    post_flop = PokerDeck.query.filter_by(user=user_id).first()
+    # player_stack = str(post_flop.player_stack)
     return render_template('the_turn.html', post=post_flop, stack=player_stack)
 
 @app.route('/the_river')
+@login_required
 def the_river():
     global player_stack
-    post_flop = PokerDeck.query.get(1)
-    player_stack = post_flop.player_stack - 50
-    post_flop.player_stack = player_stack
-    db.session.commit()
-    player_stack = str(post_flop.player_stack)
+    user_id = current_user.get_id()
+    post_flop = PokerDeck.query.filter_by(user=user_id).first()
+    # player_stack = post_flop.player_stack - 50
+    # post_flop.player_stack = player_stack
+    # db.session.commit()
+    # player_stack = str(post_flop.player_stack)
     return render_template('the_river.html', post=post_flop, stack=player_stack)
 
 @app.route('/the_showdown')
+@login_required
 def the_showdown():
     global wins
     global counter
-    post_flop = PokerDeck.query.get(1)
-    player_stack = post_flop.player_stack - 100
-    if post_flop.winner == "Player":
-        player_stack += 400
-    elif post_flop.winner == "It's a draw!":
-        player_stack += 200
-    post_flop.player_stack = player_stack
-    db.session.commit()
-    player_stack = str(post_flop.player_stack)
+    user_id = current_user.get_id()
+    post_flop = PokerDeck.query.filter_by(user=user_id).first()
+    # player_stack = post_flop.player_stack - 100
+    # if post_flop.winner == "Player":
+    #     player_stack += 400
+    # elif post_flop.winner == "It's a draw!":
+    #     player_stack += 200
+    # post_flop.player_stack = player_stack
+    # db.session.commit()
+    # player_stack = str(post_flop.player_stack)
     if post_flop.winner == 'Player':
         wins += 1
     return render_template('the_showdown.html', post=post_flop, stack=player_stack, wins=wins, counter=counter)
 
 @app.route('/exit_game')
+@login_required
 def exit_game():
     return render_template('exit_game.html')
 
 @app.route('/exit_final')
 def exit_final():
     global wins, counter
-    post_flop = PokerDeck.query.get(1)
-    post_flop.player_stack = 0
-    db.session.commit()
+
+    # post_flop = PokerDeck.query.get(1)
+    # post_flop.player_stack = 0
+    # db.session.commit()
     wins, counter = 0,0
+    return
     return render_template('exit.html')
 
 @app.route('/')
 def about():
-    return render_template('pokerplay.html')
-
+    return render_template('pokerplay.html',logged_in = current_user.is_authenticated)
 
 if __name__ == "__main__":
     app.run(debug=True)

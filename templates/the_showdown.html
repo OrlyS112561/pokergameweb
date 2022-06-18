@@ -44,18 +44,10 @@
     </div>
     <div class="row">
         <div class = "label">
-            <h2>{{post.player1_hand}}</h2>
+            <h2>{{post.player2_hand}}</h2>
         </div>
         <div class = "label">
-            <h2>{{post.player2_hand}}</h2>
-
-<!--        {% if post.player_stack > 999 and post.player_stack <= 9999 %}-->
-<!--            <h2 style="font-size: 35px">Player's Stack: ${{stack[0]}},{{stack[1:]}}</h2>-->
-<!--        {% elif post.player_stack > 9999 %}-->
-<!--            <h2 style="font-size: 35px">Player's Stack: ${{stack[0]}}{{stack[1]}},{{stack[2:]}}</h2>-->
-<!--        {% else %}-->
-<!--            <h2>Player's Stack: ${{post.player_stack}}</h2>-->
-<!--        {% endif %}-->
+            <h2>{{post.player1_hand}}</h2>
         </div>
         <div class="label">
             {% if post.winner == 'Player' %}
@@ -83,12 +75,13 @@
 
     <div class="row">
         <div class="label">
-            <img class="img_hand" src="{{post.img1}}">
-            <img class="img_hand" src="{{post.img2}}">
-        </div>
-        <div class="label">
             <img class="img_hand" src='{{post.img3}}'>
             <img class="img_hand" src='{{post.img4}}'>
+        </div>
+        <div class="label">
+            <img class="img_hand" src="{{post.img1}}">
+            <img class="img_hand" src="{{post.img2}}">
+
         </div>
         <div class="label">
             <h2>Another game? </h2>

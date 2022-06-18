@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,300&display=swap" rel="stylesheet">
+</head>
+<body class="body_class">
+    <div id="login-form-wrap">
+      <h2>Login</h2>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+             <p>{{ message }}</p>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      <form action="{{url_for('login')}}" method="post" id="login-form">
+        <p>
+        <input type="email" id="email" name="email" placeholder="Email Address" required><i class="validation"><span></span><span></span></i>
+        <p>
+        <input type="text" id="password" name="password" placeholder="Password" required><i class="validation"><span></span><span></span></i>        </p>
+        </p>
+        <p>
+        <input type="submit" id="login" value="Login">
+        </p>
+      </form>
+      <div id="create-account-wrap">
+        <p>Not a member? <a href="{{url_for('register')}}">Register Account</a><p>
+      </div><!--create-account-wrap-->
+    </div><!--login-form-wrap-->
+</body>
+</html>
