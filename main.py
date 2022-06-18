@@ -1119,8 +1119,8 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://bhrvoqmutroiau:8094732136390fac098d971c35ae2fa9777df7f62501ed03f16376ad9a382974@ec2-52-206-182-219.compute-1.amazonaws.com:5432/d69fm92tscn1hh'
-app.config['SQLALCHEMY_BINDS'] = {'posts':'postgresql://gbmstexhdzhmfd:ed6322f032fc9490f7c1f85976d1285b96a55296d9a29ce0b0c21538c2c16026@ec2-52-204-195-41.compute-1.amazonaws.com:5432/db9nk8on952drg'}
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://qcfbrvhrgylqsw:6a0e02ae287651979d4ad4298efa5781c5671e473b04011ea0fcb1aba583c482@ec2-52-206-182-219.compute-1.amazonaws.com:5432/df8vobp56a27au'
+app.config['SQLALCHEMY_BINDS'] = {'posts':'postgresql://nyyigjicgszqod:67d0258845d6de6609fd9efbbc326432ad6af2486f50d70e1ef759c1386cd222@ec2-52-206-182-219.compute-1.amazonaws.com:5432/degoenmn35rpoe'}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
