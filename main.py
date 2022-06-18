@@ -1223,7 +1223,7 @@ def start_game():
     user = User.query.get(user_id)
     poker = []
     poker = poker_game()
-    street = 2
+    street = 1
     img1 = '/static/images/' + poker[0] + '.png'
     img2 = '/static/images/' + poker[1] + '.png'
     img3 = '/static/images/' + poker[2] + '.png'
@@ -1291,6 +1291,7 @@ def the_flop():
     global player_stack
     user_id = current_user.get_id()
     post_flop = PokerDeck.query.filter_by(user=user_id).first()
+    post_flop.street = 2
     stack = str(post_flop.player_stack)
     return render_template('index.html', post=post_flop, stack=stack)
 
