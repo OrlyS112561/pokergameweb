@@ -1040,7 +1040,7 @@ def poker_game():
         winner = 'Player'
     elif is_2pairs2 and not is_2pairs1:
         winner = 'Dealer'
-    elif is_2pairs1 and is_2pairs2:
+        elif is_2pairs1 and is_2pairs2:
         if min(player1_2pairs) == 1 and min(player2_2pairs) != 1:
             winner = 'Player'
         elif min(player1_2pairs) != 1 and min(player2_2pairs) == 1:
@@ -1053,37 +1053,49 @@ def poker_game():
             winner = 'Player'
         elif min(player1_2pairs) < min(player2_2pairs):
             winner = 'Dealer'
-        elif max(player1_2pairs) == max(player2_2pairs) and min(player1_2pairs) == min(player2_2pairs):
+        elif min(player1_hand_value) == min(player2_hand_value) and max(player1_hand_value) == max(player2_hand_value):
             winner = "It's a draw!"
         else:
             if board_value.count(player1_hand_value[0]) == 0:
                 kicker1 = player1_hand_value[0]
-                for card in board_value:
-                    if card == player1_2pairs[0] or card == player1_2pairs[1] or board.count(card) == 2:
-                        pass
-                    elif card > kicker1:
-                        kicker1 = card
+                if kicker1 == 1:
+                    pass
+                else:
+                    for card in board_value:
+                        if card == player1_2pairs[0] or card == player1_2pairs[1] or board_value.count(card) == 2:
+                            pass
+                        elif card > kicker1:
+                            kicker1 = card
             elif board_value.count(player1_hand_value[1]) == 0:
                 kicker1 = player1_hand_value[1]
-                for card in board_value:
-                    if card == player1_2pairs[0] or card == player1_2pairs[1] or board.count(card) == 2:
-                        pass
-                    elif card > kicker1:
-                        kicker1 = card
+                if kicker1 == 1:
+                    pass
+                else:
+                    for card in board_value:
+                        if card == player1_2pairs[0] or card == player1_2pairs[1] or board_value.count(card) == 2:
+                            pass
+                        elif card > kicker1:
+                            kicker1 = card
             if board_value.count(player2_hand_value[0]) == 0:
                 kicker2 = player2_hand_value[0]
-                for card in board_value:
-                    if card == player2_2pairs[0] or card == player2_2pairs[1] or board.count(card) == 2:
-                        pass
-                    elif card > kicker2:
-                        kicker2 = card
+                if kicker2 == 1:
+                    pass
+                else:
+                    for card in board_value:
+                        if card == player2_2pairs[0] or card == player2_2pairs[1] or board_value.count(card) == 2:
+                            pass
+                        elif card > kicker2:
+                            kicker2 = card
             elif board_value.count(player2_hand_value[1]) == 0:
-                kicker2 = player1_hand_value[0]
-                for card in board_value:
-                    if card == player2_2pairs[0] or card == player2_2pairs[1] or board_value.count(card) == 2:
-                        pass
-                    elif card > kicker2:
-                        kicker2 = card
+                kicker2 = player1_hand_value[1]
+                if kicker2 == 1:
+                    pass
+                else:
+                    for card in board_value:
+                        if card == player2_2pairs[0] or card == player2_2pairs[1] or board_value.count(card) == 2:
+                            pass
+                        elif card > kicker2:
+                            kicker2 = card
             if kicker1 == 1 and kicker2 != 1:
                 winner = 'Player'
             elif kicker1 != 1 and kicker2 == 1:
