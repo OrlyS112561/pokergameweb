@@ -1040,7 +1040,7 @@ def poker_game():
         winner = 'Player'
     elif is_2pairs2 and not is_2pairs1:
         winner = 'Dealer'
-        elif is_2pairs1 and is_2pairs2:
+    elif is_2pairs1 and is_2pairs2:
         if min(player1_2pairs) == 1 and min(player2_2pairs) != 1:
             winner = 'Player'
         elif min(player1_2pairs) != 1 and min(player2_2pairs) == 1:
