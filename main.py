@@ -262,15 +262,16 @@ def check_if_straight_flush(hand, board):
             if len(board_set) < 5 and len(strflush.intersection(c_set)) == 5:
                 is_straight_flush = True
                 straight_flush_cards = []
-                straight_flush_cards = strflush
-                if straight_flush_cards[0][-1] == 'S':
-                    flush_shade = '♠'
-                if straight_flush_cards[0][-1] == 'C':
-                    flush_shade = '♣'
-                if straight_flush_cards[0][-1] == 'H':
-                    flush_shade = '❤'
-                if straight_flush_cards[0][-1] == 'D':
-                    flush_shade = '♦'
+                straight_flush_cards = c_set
+                for card in straight_flush_cards:
+                    if card[-1] == 'S':
+                        flush_shade = '♠'
+                    if card[-1] == 'C':
+                        flush_shade = '♣'
+                    if card[-1] == 'H':
+                        flush_shade = '❤'
+                    if card[-1] == 'D':
+                        flush_shade = '♦'
                 straight_flush = [is_straight_flush, straight_flush_cards, flush_shade]
                 return straight_flush
     straight_flush = [is_straight_flush]
