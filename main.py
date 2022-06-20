@@ -592,14 +592,24 @@ def get_player_3ofakind(player_hand_value, board_value):
 def check_if_2pairs(hand_value, board_value):
     is_2pairs = False
     board2pairs = []
-    for i in range(0,14):
-        if board_value.count(i) == 2:
-            board2pairs.append(i)
-    if hand_value[0] == hand_value[1]: # pair
+    for card in board_value:
+        if board_value.count(card) == 2:
+            if board2pairs.count(card) == 1:
+                pass
+            else:
+                board2pairs.append(card)
+    if hand_value[0] == hand_value[1]:
         if len(board2pairs) == 1:
             is_2pairs = True
-        if len(board2pairs) == 2:
-            if hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1]:
+        elif len(board2pairs) == 2:
+            if min(board2pairs) == 1:
+                if hand_value[0] > max(board2pairs):
+                    is_2pairs = True
+                else:
+                    is_2pairs = False
+            elif hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1] or hand_value[0] == 1:
+                is_2pairs = True
+            elif hand_value[0] > board2pairs[1] or hand_value[0] > board2pairs[1]:
                 is_2pairs = True
     else:
         if board_value.count(hand_value[0]) == 1 and board_value.count(hand_value[1]) == 1:
@@ -608,14 +618,14 @@ def check_if_2pairs(hand_value, board_value):
         else:
             if board_value.count(hand_value[0]) == 1:
                 if len(board2pairs) == 2:
-                    if hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1]:
+                    if hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1] or hand_value[0] == 1:
                         is_2pairs = True
                 else:
                     if len(board2pairs) == 1:
                             is_2pairs = True
             elif board_value.count(hand_value[1]) == 1:
                 if len(board2pairs) == 2:
-                    if hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1]:
+                    if hand_value[0] > board2pairs[0] or hand_value[0] > board2pairs[1] or hand_value[1] == 1:
                         is_2pairs = True
                 else:
                     if len(board2pairs) == 1:
@@ -625,11 +635,16 @@ def check_if_2pairs(hand_value, board_value):
 def get_player_2pairs(hand_value, board_value):
     player_2pairs = []
     board_pairs = []
-    for num in range(1,14):
-        if board_value.count(num) == 2:
-            board_pairs.append(num)
+    for card in board_value:
+        if board_value.count(card) == 2:
+            if board_pairs.count(card) == 1:
+                pass
+            else:
+                board_pairs.append(card)
     if hand_value[0] == hand_value[1]:
-        if hand_value[0] == 1 or hand_value[0] > max(board_pairs):
+        if min(board_pairs) == 1:
+            player_2pairs = [min(board_pairs),hand_value[0]]
+        elif hand_value[0] == 1 or hand_value[0] > max(board_pairs):
             player_2pairs = [hand_value[0],max(board_pairs)]
         else:
             player_2pairs = [max(board_pairs), hand_value[0]]
@@ -641,7 +656,9 @@ def get_player_2pairs(hand_value, board_value):
                         player_2pairs = hand_value
                     else:
                         player_2pairs = [min(hand_value), board_pairs[0]]
-                elif max(hand_value) > board_pairs[0]:
+                elif board_pairs == 1:
+                    player_2pairs == [board_pairs,max(hand_value)]
+                elif max(hand_value) > board_pairs:
                     if min(hand_value) > board_pairs[0]:
                         player_2pairs = hand_value
                     else:
@@ -1064,7 +1081,7 @@ def poker_game():
                     for card in board_value:
                         if card == player1_2pairs[0] or card == player1_2pairs[1] or board_value.count(card) == 2:
                             pass
-                        elif card > kicker1:
+                        elif card > kicker1 or card == 1:
                             kicker1 = card
             elif board_value.count(player1_hand_value[1]) == 0:
                 kicker1 = player1_hand_value[1]
@@ -1074,7 +1091,7 @@ def poker_game():
                     for card in board_value:
                         if card == player1_2pairs[0] or card == player1_2pairs[1] or board_value.count(card) == 2:
                             pass
-                        elif card > kicker1:
+                        elif card > kicker1 or card == 1:
                             kicker1 = card
             if board_value.count(player2_hand_value[0]) == 0:
                 kicker2 = player2_hand_value[0]
@@ -1084,7 +1101,7 @@ def poker_game():
                     for card in board_value:
                         if card == player2_2pairs[0] or card == player2_2pairs[1] or board_value.count(card) == 2:
                             pass
-                        elif card > kicker2:
+                        elif card > kicker2 or card == 1:
                             kicker2 = card
             elif board_value.count(player2_hand_value[1]) == 0:
                 kicker2 = player1_hand_value[1]
@@ -1094,7 +1111,7 @@ def poker_game():
                     for card in board_value:
                         if card == player2_2pairs[0] or card == player2_2pairs[1] or board_value.count(card) == 2:
                             pass
-                        elif card > kicker2:
+                        elif card > kicker2 or card == 1:
                             kicker2 = card
             if kicker1 == 1 and kicker2 != 1:
                 winner = 'Player'
