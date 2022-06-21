@@ -46,15 +46,7 @@
         </div>
     {% endif %}
         <div class="label">
-            {% if post.player_stack > 999 and post.player_stack < 10000 %}
             <h2>Stack: ${{stack[0]}},{{stack[1:]}}</h2>
-            {% elif post.player_stack > 9999 %}
-            <h2>Stack: ${{stack[0]}}{{stack[1]}},{{stack[2:]}}</h2>
-            {% elif post.player_stack > 99999 %}}
-            <h2>Stack: ${{stack[0]}}{{stack[1]}}{{stack[2]}},{{stack[3:]}}</h2>
-            {% else %}
-            <h2>Stack: ${{stack}}</h2>
-            {% endif %}
         </div>
     </div>
     <div class="row">
@@ -128,23 +120,23 @@
             {% if post.street == 1 %}
             <h2>Proceed to flop</h2>
             <br>
-            <a href="{{url_for('the_flop')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+            <a href="{{url_for('exit_game')}}"><button class="button">N</button></a><a href="{{url_for('the_flop')}}"><button class="button">Y</button></a>
             {% elif post.street == 2 %}
             <h2>Bet $30 to proceed to turn</h2>
             <br>
-            <a href="{{url_for('the_turn')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+            <a href="{{url_for('exit_game')}}"><button class="button">N</button></a><a href="{{url_for('the_turn')}}"><button class="button">Y</button></a>
             {% elif post.street == 3 %}
             <h2>Bet $50 to proceed to river</h2>
             <br>
-            <a href="{{url_for('the_river')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+            <a href="{{url_for('exit_game')}}"><button class="button">N</button></a><a href="{{url_for('the_river')}}"><button class="button">Y</button></a>
             {% elif post.street == 4 %}
             <h2>Bet $100 to showdown</h2>
             <br>
-            <a href="{{url_for('the_showdown')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+            <a href="{{url_for('exit_game')}}"><button class="button">N</button></a><a href="{{url_for('the_showdown')}}"><button class="button">Y</button></a>
             {% else %}
             <h2>Another game? </h2>
             <br>
-            <a href="{{url_for('start_game')}}"><button class="button">Y</button></a><a href="{{url_for('exit_game')}}"><button class="button">N</button></a>
+            <a href="{{url_for('exit_game')}}"><button class="button">N</button></a><a href="{{url_for('start_game')}}"><button class="button">Y</button></a>
 
             {% endif %}
 
