@@ -589,6 +589,28 @@ def get_player_3ofakind(player_hand_value, board_value):
     return player_3ofakind
 
 # check if 2 pairs
+def check_if_2pairs(hand_value, board_value):
+    is_2pairs = False
+    board2pairs = []
+    for card in board_value:
+        if board_value.count(card) == 2:
+            if board2pairs.count(card) == 1:
+                pass
+            else:
+                board2pairs.append(card)
+    if hand_value[0] == hand_value[1]:
+        if len(board2pairs) >= 1:
+            is_2pairs = True
+    elif board_value.count(hand_value[0]) == 1 and board_value.count(hand_value[1]) == 1:
+        is_2pairs = True
+    elif board_value.count(hand_value[0]) == 1 and len(board2pairs) >= 1:
+        is_2pairs = True
+    elif board_value.count(hand_value[1]) == 1 and len(board2pairs) >= 1:
+        is_2pairs = True
+    elif len(board2pairs) == 2:
+        is_2pairs = True
+    return is_2pairs
+
 def get_player_2pairs(hand_value, board_value):
     player_2pairs = []
     board_pairs = []
