@@ -635,7 +635,9 @@ def get_player_2pairs(hand_value, board_value):
                 else:
                     player_2pairs = [min(hand_value), max(board_pairs)]
             elif min(board_pairs) == 1:
-                player_2pairs == [min(board_pairs),max(hand_value)]
+                print('yo')
+                print(min(board_pairs), max(hand_value))
+                player_2pairs = [min(board_pairs),max(hand_value)]
             elif max(hand_value) > min(board_pairs):
                 if min(hand_value) > min(board_pairs):
                     player_2pairs = hand_value
@@ -667,12 +669,18 @@ def get_player_2pairs(hand_value, board_value):
     elif board_value.count(max(hand_value)) == 1:
         if min(board_pairs) == 1 and max(hand_value) > max(board_pairs):
             player_2pairs = [min(board_pairs), max(hand_value)]
-        elif max(hand_value) > max(board_pairs):
-            player_2pairs = [max(hand_value), max(board_pairs)]
-        elif max(hand_value) > min(board_pairs):
-            player_2pairs = [max(board_pairs), max(hand_value)]
+        elif len(board_pairs) == 2:
+            if max(hand_value) > max(board_pairs):
+                player_2pairs = [max(hand_value), max(board_pairs)]
+            elif max(hand_value) > min(board_pairs):
+                player_2pairs = [max(board_pairs), max(hand_value)]
+            else:
+                player_2pairs = board_pairs
         else:
-            player_2pairs = board_pairs
+            if max(hand_value) > max(board_pairs):
+                player_2pairs = [max(hand_value), max(board_pairs)]
+            else:
+                player_2pairs = [max(board_pairs),max(hand_value)]
     else:
         player_2pairs = board_pairs
     return player_2pairs
