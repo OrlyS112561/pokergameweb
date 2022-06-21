@@ -46,7 +46,12 @@
         </div>
     {% endif %}
         <div class="label">
+            {% if post.player_stack > 999 and post.player_stack < 10000 %}
             <h2>Stack: ${{stack[0]}},{{stack[1:]}}</h2>
+            {% elif post.player_stack > 9999 %}
+            <h2>Stack: ${{stack[0]}}{{stack[1]}},{{stack[2:]}}</h2>
+            {% else %}
+            <h2>Stack: ${{stack}}</h2>
         </div>
     </div>
     <div class="row">
