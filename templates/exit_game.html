@@ -30,6 +30,7 @@
         <div class="label">
             <div class="title_div blink">
                 <h1>Let's Play Poker</h1>
+                <<h1>&nbsp</h1>
             </div>
         </div>
         <div class="label">
@@ -39,14 +40,15 @@
     </div>
     <div class="row">
         <div class="label">
+            <a href="{{url_for('logout')}}"><button class="button b">Exit Game</button></a>
         </div>
         <div class="label">
             <h2>Thank you for playing!</h2>
             <h2>I hope you enjoyed the game!</h2>
             <h3>&nbsp;</h3>
-            <a href="{{url_for('start_game')}}"><button class="button">Play Again</button></a><a href="{{url_for('logout')}}"><button class="button">Exit Game</button></a>
         </div>
         <div class="label">
+            <a href="{{url_for('start_game')}}"><button class="button b">Play Again</button></a>
         </div>
     </div>
     <br>
