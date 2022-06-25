@@ -275,24 +275,26 @@ h1 {
 }
 
 h2 {
-    font-size: 30px;
+    font-size: 40px;
     margin: 10px;
 }
 
 h3 {
-    font-size: 15px;
+    font-size: 35px;
 }
 
 .img_hand {
     width: 120px;
     height: 170px;
     margin: 0px 5px;
+    border-radius: 5px;
 
 }
 
 .img_board {
     width: 150px;
     height: 200px;
+    border-radius: 5px;
 }
 
 .board {
