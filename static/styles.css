@@ -370,6 +370,8 @@ h3 {
     font-size: 20px;
     margin-left: 15px;
     padding: 20px 30px;
+    border: solid;
+    border-color: grey;
 }
 
 .button1 {
