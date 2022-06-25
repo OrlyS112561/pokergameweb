@@ -351,9 +351,9 @@ def compare_flush_cards(player1, player2, flush):
     return winner
 
 def check_if_straight(hand_value, board_value):
+    global straight_list
     is_straight = False
     for list in reversed(straight_list):
-        global straight_hand
         straight_hand = []
         for h in hand_value:
             if h in straight_hand:
@@ -371,8 +371,8 @@ def check_if_straight(hand_value, board_value):
     return is_straight
 
 def get_player_straight(hand_value, board_value):
+    global straight_list
     for list in reversed(straight_list):
-        global straight_hand
         straight_hand = []
         for h in hand_value:
             if h in straight_hand:
