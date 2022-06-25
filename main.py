@@ -329,18 +329,13 @@ def compare_flush_cards(player1, player2, flush):
     player1_flush = []
     for card in player1:
         if card[-1] == flush:
-            if len(card) == 3:
-                player1_flush.append(int(card[0:2]))
-            else:
-                player1_flush.append(int(card[0]))
+            card = get_card_value(card)
+            player1_flush.append(card)
     player2_flush = []
     for card in player2:
         if card[-1] == flush:
-            if card[-1] == flush:
-                if len(card) == 3:
-                    player2_flush.append(int(card[0:2]))
-                else:
-                    player1_flush.append(int(card[0]))
+            card = get_card_value(card)
+            player2_flush.append(card)
     print(player1_flush, player2_flush)
     if max(player1_flush) > max(player2_flush):
         winner = 'Player'
@@ -931,8 +926,8 @@ def poker_game():
     is_straight_p2 = check_if_straight(player2_hand_value, board_value) # check if straight
     if len(is_straight_flush2) > 1:
         straight_card2 = []
-        for card in is_straight_flush1[1]:
-            straight_card1.append(card[0])
+        for card in is_straight_flush2[1]:
+            straight_card2.append(card[0])
         p2hand = f'Straight flush of {is_straight_flush2[2]} from {straight_card2[0]} to {straight_card2[4]}'
     elif is_flush_p2:
         player2_flush = get_player_flush(player2_hand, board)
