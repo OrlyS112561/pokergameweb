@@ -329,11 +329,19 @@ def compare_flush_cards(player1, player2, flush):
     player1_flush = []
     for card in player1:
         if card[-1] == flush:
-            player1_flush.append(card[0])
+            if len(card) == 3:
+                player1_flush.append(int(card[0:2]))
+            else:
+                player1_flush.append(int(card[0]))
     player2_flush = []
     for card in player2:
         if card[-1] == flush:
-            player2_flush.append(card[0])
+            if card[-1] == flush:
+                if len(card) == 3:
+                    player2_flush.append(int(card[0:2]))
+                else:
+                    player1_flush.append(int(card[0]))
+    print(player1_flush, player2_flush)
     if max(player1_flush) > max(player2_flush):
         winner = 'Player'
     elif max(player1_flush) < max(player2_flush):
