@@ -783,7 +783,7 @@ def check_board_highcard(player, board):
     ctr = 0
     is_winner = False
     for card in board:
-        if card == 1 or board.count(card) == 2:
+        if card == 1 or board.count(card) >= 2:
             pass
         elif player > card:
             ctr += 1
