@@ -39,13 +39,14 @@ h3 {
     width: 90px;
     height: 120px;
     margin: 0px 5px;
+    border-radius: 5px;
 
 }
 
 .img_board {
     width: 110px;
-    height: 160px;
-
+    height: 150px;
+    border-radius: 5px;
 }
 
 .board {
@@ -81,14 +82,14 @@ h3 {
 .button {
   background-color: #008cba; /* Grey */
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   color: white;
-  padding: 20px 40px;
+  padding: 25px 35px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 15px;
-  margin: 0px 6px;
+  margin: 0px 10px;
   cursor: pointer;
 }
 
@@ -369,8 +370,8 @@ h3 {
 .button {
     font-size: 20px;
     margin-left: 15px;
-    padding: 20px 30px;
-    border: 2px solid;
+    padding: 30px 40px;
+    border: 5px solid;
     border-color: #3F4E4F;
 }
 
