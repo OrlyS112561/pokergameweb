@@ -1086,8 +1086,8 @@ def poker_game():
         elif min(player1_hand_value) == min(player2_hand_value) and max(player1_hand_value) == max(player2_hand_value):
             winner = "It's a draw!"
         else:
-            if player1_2pairs.count(player1_hand_value[0]) == 0:
-                kicker1 = player1_hand_value[0]
+            if player1_2pairs.count(max(player1_hand_value)) == 0:
+                kicker1 = max(player1_hand_value)
                 if kicker1 == 1:
                     pass
                 else:
@@ -1096,8 +1096,8 @@ def poker_game():
                             pass
                         elif card > kicker1 or card == 1:
                             kicker1 = card
-            elif player1_2pairs.count(player1_hand_value[1]) == 0:
-                kicker1 = player1_hand_value[1]
+            elif player1_2pairs.count(min(player1_hand_value)) == 0:
+                kicker1 = min(player1_hand_value)
                 if kicker1 == 1:
                     pass
                 else:
@@ -1106,8 +1106,8 @@ def poker_game():
                             pass
                         elif card > kicker1 or card == 1:
                             kicker1 = card
-            if player2_2pairs.count(player2_hand_value[0]) == 0:
-                kicker2 = player2_hand_value[0]
+            if player2_2pairs.count(max(player2_hand_value)) == 0:
+                kicker2 = max(player2_hand_value)
                 if kicker2 == 1:
                     pass
                 else:
@@ -1116,8 +1116,8 @@ def poker_game():
                             pass
                         elif card > kicker2 or card == 1:
                             kicker2 = card
-            elif player2_2pairs.count(player2_hand_value[1]) == 0:
-                kicker2 = player1_hand_value[1]
+            elif player2_2pairs.count(min(player1_hand_value)) == 0:
+                kicker2 = min(player1_hand_value)
                 if kicker2 == 1:
                     pass
                 else:
