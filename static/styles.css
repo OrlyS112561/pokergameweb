@@ -25,9 +25,14 @@ h3 {
 
 }
 
+.stack {
+    margin-top: 15px;
+}
+
 .row {
   display: flex;
   text-align: center;
+  justify-content: center;
 }
 
 .column_5 {
@@ -39,14 +44,15 @@ h3 {
     width: 90px;
     height: 120px;
     margin: 0px 5px;
-    border-radius: 5px;
+    border-radius: 5%;
 
 }
 
 .img_board {
     width: 110px;
     height: 150px;
-    border-radius: 5px;
+    border-radius: 5%;
+
 }
 
 .board {
@@ -73,7 +79,6 @@ h3 {
 .label2 {
     font-size: 5px;
     font-family: 'Roboto Condensed' , sans-serif;
-    column-width: 500px;
     width: 100%;
     text-align: justify;
     padding: 10px;
@@ -89,7 +94,7 @@ h3 {
   text-decoration: none;
   display: inline-block;
   font-size: 15px;
-  margin: 0px 10px;
+  margin: 0px 15px;
   cursor: pointer;
 }
 
@@ -276,26 +281,24 @@ h1 {
 }
 
 h2 {
-    font-size: 40px;
+    font-size: 30px;
     margin: 10px;
 }
 
 h3 {
-    font-size: 35px;
+    font-size: 15px;
 }
 
 .img_hand {
     width: 120px;
     height: 170px;
     margin: 0px 5px;
-    border-radius: 5px;
 
 }
 
 .img_board {
     width: 150px;
     height: 200px;
-    border-radius: 5px;
 }
 
 .board {
@@ -313,6 +316,11 @@ h3 {
     text-align: justify;
     padding: 0px;
 }
+
+.stack {
+    margin-top: 25px;
+}
+
 
 .box {
 	margin: 0px 0 0 -200px;
@@ -348,6 +356,7 @@ h3 {
 .img_board {
     width: 180px;
     height: 240px;
+    margin-top: 10px;
 }
 
 .board {
@@ -369,10 +378,10 @@ h3 {
 
 .button {
     font-size: 20px;
-    margin-left: 15px;
+    margin-left: 20px;
     padding: 30px 40px;
     border: 5px solid;
-    border-color: #3F4E4F;
+    border-color: grey;
 }
 
 .button1 {
