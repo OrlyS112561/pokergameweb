@@ -1212,6 +1212,7 @@ class PokerDeck(db.Model):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        print(f"email {request.form['email']}")
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
@@ -1225,12 +1226,13 @@ def login():
             login_user(user)
             user.date_last_loggedin = datetime.datetime.now().strftime("%x")
             db.session.commit()
-            return redirect(url_for('about'))
-    return render_template("login.html", logged_in=current_user.is_authenticated)
+            return redirect(url_for('start_game'))
+    return render_template("pokerplay.html", logged_in=current_user.is_authenticated)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        print(f"name is {request.form['name']}")
         if User.query.filter_by(email=request.form['email']).first():
             flash("You already signed up with that email.  Login instead.")
             return redirect(url_for('login'))
@@ -1248,15 +1250,13 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
-        return redirect(url_for("about"))
+        return redirect(url_for("start_game"))
     return render_template("register.html", logged_in=current_user.is_authenticated)
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('about'))
-
-
 
 @app.route('/start_game')
 @login_required
